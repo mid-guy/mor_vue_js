@@ -1,19 +1,19 @@
-import axiosBase from 'axios';
+import axios from 'axios';
 import Cookies from 'js-cookie';
-
-const DOMAIN = 'https://mockup-api.herokuapp.com/';
-
 export const AUTH_TOKEN = 'auth_token';
+export const baseAPI = axios.create({
+  baseURL: import.meta.env.VITE_API_KEY,
+  timeout: 5000,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+})
 
-const headers = {
-  Accept: 'application/json',
-  Authorization: `${Cookies.get(AUTH_TOKEN)}`,
-  'Content-Type': 'application/json'
-};
+baseAPI.interceptors.request.use((request) => {
+  const accessToken = Cookies.get('auth_token')
+  const accessHeader = `Bearer ${accessToken}`
+  request.headers["Authorization"] = accessHeader
+  return request
+})
 
-const instance = axiosBase.create({
-  baseURL: DOMAIN,
-  headers,
-});
-
-export const axios = instance;
+export default baseAPI

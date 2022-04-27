@@ -21,10 +21,13 @@
 <style scoped>
   .mor_base_btn {
     background: none;
+    cursor: pointer;
+    width: 100%;
     padding: 8px 16px;
+    color: #FFF;
     border: 2px solid black;
-    font-size: 16px;
+    font-size: 14px;
+    background-color: black;
     border-radius: 5px;
   }
-
 </style>
