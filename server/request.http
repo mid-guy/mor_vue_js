@@ -20,7 +20,7 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MWQxNjlkYzQ1NGM1NGNlM2ZlNTZiYTMiLCJpYXQiOjE2NDEyMDQwODV9.YdlT8fcPF-ciXppLf2bcGcsh0X8E-Y_IzK3Mm1BfQ-0
 
 {
-  "title": "my adasd todo",
+  "title": "my todo 9",
   "description": "add new todo with node js",
   "level": "MEDIUM"
 }

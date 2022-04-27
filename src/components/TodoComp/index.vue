@@ -36,7 +36,7 @@
     <p class="td td-createdAt">
       {{ todo.createdAt }}
     </p>
-    <p class="td">
+    <p class="td td-description">
       {{ todo.description }}
     </p>
   </div>
@@ -44,25 +44,28 @@
 
 <style scoped>
   .td {
-    display: table-cell;
     padding: 5px 10px;
+    box-sizing: border-box;
   }
   .td-id {
-    width: 20px;
+    width: 50px;
     text-align: center;
   }
   .td-title {
-    width: 20%;
+    width: 250px;
   }
   .td-status {
     width: 120px;
     text-align: center;
   }
   .td-level {
-    width: 80px;
+    width: 100px;
     text-align: center;
   }
   .td-createdAt {
-    width: 200px;
+    width: 190px;
+  }
+  .td-description {
+    flex: 1;
   }
 </style>
