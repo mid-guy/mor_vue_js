@@ -31,7 +31,6 @@ router.get('/', verifyToken, async(req, res) => {
 // @access Private
 router.post('/', verifyToken, async(req, res) => {
   const { title, description, status, level } = req.body
-  
   // Simple validation
   if ( !title ) {
     return res.status(400).json({ success: false, message: 'Title is required' })
@@ -60,7 +59,7 @@ router.post('/', verifyToken, async(req, res) => {
 // @route PUT api/posts
 // @desc Create put
 // @access Private
-router.put('/:id', verifyToken, async(req, res) => {
+router.put('/post/:id', verifyToken, async(req, res) => {
   const { title, description, status, level } = req.body
   // Simple validation
   if ( !title ) {

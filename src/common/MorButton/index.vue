@@ -2,7 +2,7 @@
 <script>
   export default {
     props: {
-      content: String
+      content: String,
     },
     methods: {
       onClick() {
@@ -22,8 +22,8 @@
   .mor_base_btn {
     background: none;
     cursor: pointer;
-    width: 100%;
-    padding: 8px 16px;
+    padding: 10px 16px;
+    height: 43px;
     color: #FFF;
     border: 2px solid black;
     font-size: 14px;

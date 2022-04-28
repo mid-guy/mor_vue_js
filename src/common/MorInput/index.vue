@@ -53,10 +53,10 @@
   display: inline-flex;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   padding: 10px 16px;
-  min-height: 43px;
+  height: 43px;
   border-radius: 5px;
-  width: auto;
-  background-color: rgb(199, 199, 199);
+  /* background-color: rgb(199, 199, 199); */
+  background-color: inherit;
   border: 2px solid #282c34;
   box-sizing: border-box;
   pointer-events: none;
@@ -89,6 +89,7 @@
   font-size: inherit;
   color: #282c34;
   padding: 0;
+  width: 100%;
   pointer-events: auto;
 }
 
@@ -99,7 +100,8 @@
   padding: 0 4px;
   cursor: text;
   color: #282c34;
-  background-color: rgb(199, 199, 199);
+  /* background-color: rgb(199, 199, 199); */
+  background-color: inherit;
   overflow: hidden;
   -webkit-transform-origin: center left;
   transform-origin: center left;
