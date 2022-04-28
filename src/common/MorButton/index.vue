@@ -6,7 +6,7 @@
     },
     methods: {
       onClick() {
-        this.$emit('onClick')
+        this.$emit('onClickEvent')
       } 
     } 
   }

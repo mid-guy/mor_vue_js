@@ -59,7 +59,7 @@ router.post('/', verifyToken, async(req, res) => {
 // @route PUT api/posts
 // @desc Create put
 // @access Private
-router.put('/post/:id', verifyToken, async(req, res) => {
+router.put('/:id', verifyToken, async(req, res) => {
   const { title, description, status, level } = req.body
   // Simple validation
   if ( !title ) {

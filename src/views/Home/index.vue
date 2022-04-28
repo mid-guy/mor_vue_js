@@ -16,15 +16,13 @@ export default {
       todos: [],
       isLoading: false,
       isModal: false,
-      title: {
-        edit: '',
-        search: '',
-        create: ''
-      },
-      description: {
-        edit: '',
-        create: ''
-      }
+      selectedTodo_id: '',
+      selectedTodo_type: '',
+      titleEdit: '',
+      titleSearch: '',
+      titleCreate: '',
+      descriptionEdit: '',
+      descriptionCreate: '',
     }
   },
   created() {
@@ -44,40 +42,72 @@ export default {
       this.cleanInput()
       this.fetchTodo()
     },
-    async editTodo(_id) {
-      const body = { title: this.title.edit, description: this.description.edit, level: 'MEDIUM' }
-      await baseAPI.put(`/api/post/${id}`, body)
+    async editTodo() {
+      const body = { title: this.titleEdit, description: this.descriptionEdit, level: 'MEDIUM' }
+      await baseAPI.put(`/api/posts/${this.selectedTodo_id}`, body)
+      this.handleToggle()
       this.cleanInput()
       this.fetchTodo()
     },
-    cleanInput() {
-      // this.title = '',
-      // this.description = ''
+    async deleteTodo() {
+      await baseAPI.delete(`/api/posts/${this.selectedTodo_id}`)
+      this.handleToggle()
+      this.fetchTodo()
     },
-    handleModal() {
+    cleanInput() {
+      this.title = '',
+      this.description = ''
+    },
+    handleToggle(data) {
+      if ( data ) {
+        const { _id, index, type } = data
+        //
+        this.selectedTodo_id = _id
+        this.selectedTodo_type = type
+        if ( type === 'edit' ) {
+          this.titleEdit = this.todos[index].title
+          this.descriptionEdit = this.todos[index].description
+        } 
+      }
+      //
       this.isModal = !this.isModal
     },
     handleChange(data) {
       this[data.name] = data.value
     },
-    handleSubmit(_id, type = 'create') {
-      console.log({_id, type })
-      // if ( type === 'edit' ) {
-      //   return this.editTodo()
-      // }
-      // return this.createTodo()
+    handleSubmit() {
+      if ( this.selectedTodo_type === 'edit' ) {
+        return this.editTodo()
+      }
+      if ( this.selectedTodo_type === 'delete' ) {
+        return this.deleteTodo()
+      }
+      if ( this.selectedTodo_type === 'completed' ) {
+        return 
+      }
+      return this.createTodo()
     }
   },
 }
 </script>
 
 <template> 
-  <div v-show="isLoading"><p>Loading...</p></div>
-  <div v-show="!isLoading" id="home_page--container">
+  <div v-if="isLoading"><p>Loading...</p></div>
+  <div v-else id="home_page--container">
     <MorPopup v-show="isModal">
       <div class="modal_container">
-        <MorInput name="title.edit" :place="'Title'" @onChange="handleChange" />
-        <MorInput name="description.edit" :place="'Description'" @onChange="handleChange" />
+        <MorInput 
+          name="titleEdit"
+          :value="titleEdit"
+          :place="'Title'"
+          @onChange="handleChange" 
+        />
+        <MorInput 
+          name="descriptionEdit"
+          :value="descriptionEdit"
+          :place="'Description'" 
+          @onChange="handleChange" 
+        />
         <MorButton content="Save" :onClick="handleSubmit" />
       </div>
     </MorPopup> 
@@ -86,7 +116,7 @@ export default {
       <!-- <MorButton content="Search" :onClick="handleModal" /> -->
       <!-- <MorButton content="Edit" :onClick="handleModal" /> -->
     </div>
-    <Todos :todos="todos" class="table_grid" :onClick="handleModal" />
+    <Todos :todos="todos" class="table_grid" @toggle="handleToggle" />
   </div>
 </template>
 

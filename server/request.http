@@ -24,7 +24,16 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MWQxN
   "description": "add new todo with node js",
   "level": "MEDIUM"
 }
+###
+PUT http://localhost:5000/api/posts/61d71836451d2f31559fc227
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MWQxNjlkYzQ1NGM1NGNlM2ZlNTZiYTMiLCJpYXQiOjE2NDEyMDQwODV9.YdlT8fcPF-ciXppLf2bcGcsh0X8E-Y_IzK3Mm1BfQ-0
 
+{
+  "title": "my todo 12121545",
+  "description": "add new todo with node js 12312312",
+  "level": "MEDIUM"
+}
 ###
 GET http://localhost:5000/api/posts
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MWQxNjlkYzQ1NGM1NGNlM2ZlNTZiYTMiLCJpYXQiOjE2NDEyMDQwODV9.YdlT8fcPF-ciXppLf2bcGcsh0X8E-Y_IzK3Mm1BfQ-0

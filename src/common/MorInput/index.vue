@@ -5,6 +5,7 @@
         type: String, 
         default: 'Type here'
       },
+      value: String,
       name: String,
     },
     data() {
@@ -29,6 +30,7 @@
   <div class='root-textfield__outlined' id="outlined">
     <input 
       class='__input'
+      :value="value"
       placeholder=" "
       @input="onChange"
     />

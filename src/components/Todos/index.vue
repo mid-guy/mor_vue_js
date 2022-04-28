@@ -8,8 +8,8 @@
       todos: Array,
     },
     methods: {
-      onClick() {
-        this.$emit('handleModal')
+      onClick(_id, index, type) {
+        this.$emit('toggle', { _id: _id, index: index, type: type })
       }
     }
   }
@@ -64,7 +64,9 @@
             {{ todo.description }}
           </p>
           <div class="td td-action">
-            <MorButton content="Edit" :onClick="onClick(todo._id, type ='edit')" />
+            <MorButton content="Edit" @onClickEvent="onClick(todo._id, index, 'edit')" />
+            <MorButton content="Completed" @onClickEvent="onClick(todo._id, index, 'completed')" />
+            <MorButton content="Delete" @onClickEvent="onClick(todo._id, index, 'delete')" />
           </div>
         </div>
       </div>
@@ -147,5 +149,11 @@
 
   .td-action {
     width: fit-content;
+    display: flex;
+    gap: 10px;
+  }
+  .td-action > button:last-child {
+    background-color: rgb(215, 27, 27);
+    border-color: rgb(215, 27, 27);
   }
 </style>
