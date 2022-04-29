@@ -35,33 +35,38 @@ import { API_AUTH_PAGE, COOKIES, ROUTES } from '../../utils/constants';
 
 <template>
   <div id="sign_in_page--container">
+    <h1>Sign in</h1>
     <div class="content">
-      <h2>Sign in</h2>
       <div class="form_input">
-        <MorInput name="email" :place="'Email'" @onChange="handleChange" />
-        <MorInput type="password" name="password" :place="'Password'"  @onChange="handleChange" />
       </div>
-      <MorButton outlined content="Sign In" :onClick="handleSubmit" />
     </div>
   </div>
 </template>
 
 
-<style>
+<style lang="scss" scoped>
   #sign_in_page--container {
     width: 100vw;
     height: 100vh;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-  }
-
-  #sign_in_page--container .content {
-    width: 330px;
-    border-radius: 15px;
-    background-color: rgb(199, 199, 199);
-    padding: 20px 25px;
-    box-sizing: border-box;
+    h1 {
+      margin: 0;    
+      font-size: 24px;
+      font-weight: 300;
+      letter-spacing: -0.5px;
+      font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+    }
+    .content {
+      width: 330px;
+      border-radius: 5px;
+      border: 1px solid hsla(210,18%,87%,1);
+      background-color: #f6f8fa;
+      padding: 16px;
+      box-sizing: border-box;
+    }
   }
   
   #sign_in_page--container .content > button {
@@ -78,4 +83,5 @@ import { API_AUTH_PAGE, COOKIES, ROUTES } from '../../utils/constants';
   h2 {
     text-align: center;
   }
-</style>
+
+</style>>
