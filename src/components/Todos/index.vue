@@ -1,8 +1,14 @@
 <script>
   import MorButton from '@/common/MorButton/index.vue'
+  import { ACTION } from '../../utils/constants'
   export default {
     components: {
       MorButton
+    },
+    data() {
+      return {
+        ACTION: ACTION
+      }
     },
     props: {
       todos: Array,
@@ -10,6 +16,11 @@
     methods: {
       onClick(_id, index, type) {
         this.$emit('toggle', { _id: _id, index: index, type: type })
+      },
+    },
+    computed: {
+      convertTime(time) {
+        return time
       }
     }
   }
@@ -64,9 +75,9 @@
             {{ todo.description }}
           </p>
           <div class="td td-action">
-            <MorButton content="Edit" @onClickEvent="onClick(todo._id, index, 'edit')" />
-            <MorButton content="Completed" @onClickEvent="onClick(todo._id, index, 'completed')" />
-            <MorButton content="Delete" @onClickEvent="onClick(todo._id, index, 'delete')" />
+            <MorButton outlined content="Edit" @onClickEvent="onClick(todo._id, index, ACTION.EDIT)" />
+            <MorButton outlined content="Completed" @onClickEvent="onClick(todo._id, index, ACTION.COMPLETED)" />
+            <MorButton danger content="Delete" @onClickEvent="onClick(todo._id, index, ACTION.DELETE)" />
           </div>
         </div>
       </div>
@@ -96,12 +107,12 @@
     position: sticky;
     top: 0;
     background-color: black;
-    min-width: 1000px;
+    min-width: 1200px;
     color: #FFF;
   }
 
   .table_content {
-    min-width: 1000px;
+    min-width: 1200px;
   }
 
   .row {
@@ -151,9 +162,5 @@
     width: fit-content;
     display: flex;
     gap: 10px;
-  }
-  .td-action > button:last-child {
-    background-color: rgb(215, 27, 27);
-    border-color: rgb(215, 27, 27);
   }
 </style>

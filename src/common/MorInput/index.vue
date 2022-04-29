@@ -7,6 +7,10 @@
       },
       value: String,
       name: String,
+      type: {
+        type: String,
+        default: 'text'
+      }
     },
     data() {
       return {
@@ -31,6 +35,7 @@
     <input 
       class='__input'
       :value="value"
+      :type="type"
       placeholder=" "
       @input="onChange"
     />

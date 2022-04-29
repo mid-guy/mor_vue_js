@@ -10,9 +10,9 @@
     },
     data() {
       return {
-        todoContent: '',
         email: '',
         password: '',
+        passwordConfirm: '',
       }
     },
     methods: {
@@ -20,9 +20,8 @@
         this[data.name] = data.value
       },
       handleSubmit() {
-        const body = { email: this.email, password: this.password }
-        console.log('body', body)
-        baseAPI.post('/api/auth/signin', body)
+        const body = { email: this.email, password: this.password, passwordConfirm: this.passwordConfirm }
+        baseAPI.post('/api/auth/signup', body)
           .then((res) => { 
             Cookies.set('auth_token', res.data.auth_token)
             this.$router.push('/')
@@ -39,9 +38,9 @@
       <div class="form_input">
         <MorInput name="email" :place="'Email'" @onChange="handleChange" />
         <MorInput name="password" :place="'Password'"  @onChange="handleChange" />
-        <MorInput name="password" :place="'Confirm Password'"  @onChange="handleChange" />
+        <MorInput name="passwordConfirm" :place="'Confirm Password'"  @onChange="handleChange" />
       </div>
-      <MorButton content="Sign In" :onClick="handleSubmit" />
+      <MorButton content="Sign Up" :onClick="handleSubmit" />
     </div>
   </div>
 </template>

@@ -3,6 +3,7 @@
   import MorInput from '@/common/MorInput/index.vue'
   import baseAPI from '@/config/index.js'
   import Cookies from 'js-cookie';
+import { API_AUTH_PAGE, COOKIES, ROUTES } from '../../utils/constants';
   export default {
     components: {
       MorInput,
@@ -21,10 +22,10 @@
       },
       handleSubmit() {
         const body = { username: this.email, password: this.password }
-        baseAPI.post('api/auth/login', body)
+        baseAPI.post(`${API_AUTH_PAGE.SIGN_IN}`, body)
           .then((res) => {
-            Cookies.set('auth_token', res.data.accessToken)
-            this.$router.push('/')
+            Cookies.set(`${COOKIES.AUTH_TOKEN}`, res.data.accessToken)
+            this.$router.push(`${ROUTES.HOME}`)
           })
           .catch((err) => console.log(err))
       }
@@ -35,11 +36,12 @@
 <template>
   <div id="sign_in_page--container">
     <div class="content">
+      <h2>Sign in</h2>
       <div class="form_input">
         <MorInput name="email" :place="'Email'" @onChange="handleChange" />
-        <MorInput name="password" :place="'Password'"  @onChange="handleChange" />
+        <MorInput type="password" name="password" :place="'Password'"  @onChange="handleChange" />
       </div>
-      <MorButton content="Sign In" :onClick="handleSubmit" />
+      <MorButton outlined content="Sign In" :onClick="handleSubmit" />
     </div>
   </div>
 </template>
@@ -53,6 +55,7 @@
     align-items: center;
     justify-content: center;
   }
+
   #sign_in_page--container .content {
     width: 330px;
     border-radius: 15px;
@@ -60,11 +63,19 @@
     padding: 20px 25px;
     box-sizing: border-box;
   }
+  
+  #sign_in_page--container .content > button {
+    width: 100%;
+  }
 
   #sign_in_page--container .content .form_input {
+    background-color: inherit;
     display: flex;
     flex-direction: column;
     gap: 15px;
     margin-bottom: 20px
+  }
+  h2 {
+    text-align: center;
   }
 </style>

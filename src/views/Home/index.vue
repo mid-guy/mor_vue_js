@@ -4,6 +4,9 @@ import Todos from '@/components/Todos/index.vue'
 import MorInput from '@/common/MorInput/index.vue'
 import MorButton from '@/common/MorButton/index.vue'
 import MorPopup from '@/common/MorPopup/index.vue'
+import Cookies from 'js-cookie';
+import { COOKIES } from "../../utils/constants"
+import { API_HOME_PAGE, LEVEL, ACTION, ROUTES } from "@/utils/constants"
 export default {
   components: {
     Todos,
@@ -13,16 +16,16 @@ export default {
   },
   data() {
     return {
+      //
+      ACTION: ACTION,
+      //
       todos: [],
       isLoading: false,
       isModal: false,
       selectedTodo_id: '',
       selectedTodo_type: '',
-      titleEdit: '',
-      titleSearch: '',
-      titleCreate: '',
-      descriptionEdit: '',
-      descriptionCreate: '',
+      title: '',
+      description: ''
     }
   },
   created() {
@@ -31,42 +34,51 @@ export default {
   methods: {
     async fetchTodo() {
       this.isLoading = true
-      const response = await baseAPI.get('/api/posts')
-      console.log(response.data.posts)
+      const response = await baseAPI.get(`${API_HOME_PAGE}`)
       this.todos = response.data.posts
       this.isLoading = false
     },
     async createTodo() {
-      const body = { title: this.title, description: this.description, level: 'MEDIUM' }
-      await baseAPI.post('/api/posts', body)
+      const body = { title: this.title, description: this.description, level: LEVEL.MEDIUM }
+      await baseAPI.post(`${API_HOME_PAGE}`, body)
+      this.handleToggle()
       this.cleanInput()
       this.fetchTodo()
     },
     async editTodo() {
-      const body = { title: this.titleEdit, description: this.descriptionEdit, level: 'MEDIUM' }
-      await baseAPI.put(`/api/posts/${this.selectedTodo_id}`, body)
+      const body = { title: this.title, description: this.description, level: LEVEL.MEDIUM }
+      await baseAPI.put(`${API_HOME_PAGE}/${this.selectedTodo_id}`, body)
       this.handleToggle()
       this.cleanInput()
       this.fetchTodo()
     },
     async deleteTodo() {
-      await baseAPI.delete(`/api/posts/${this.selectedTodo_id}`)
+      await baseAPI.delete(`${API_HOME_PAGE}/${this.selectedTodo_id}`)
       this.handleToggle()
       this.fetchTodo()
     },
     cleanInput() {
-      this.title = '',
+      this.selectedTodo_id = ''
+      this.selectedTodo_type = ''
+      this.title = ''
       this.description = ''
     },
+    handleCloseAction() {
+      this.cleanInput()
+      this.handleToggle()
+    },
     handleToggle(data) {
-      if ( data ) {
+      if ( data === ACTION.CREATE ) {
+        this.selectedTodo_type = ACTION.CREATE
+      }
+      if ( data?.type && data?.type !== ACTION.CREATE ) {
         const { _id, index, type } = data
         //
         this.selectedTodo_id = _id
         this.selectedTodo_type = type
-        if ( type === 'edit' ) {
-          this.titleEdit = this.todos[index].title
-          this.descriptionEdit = this.todos[index].description
+        if ( type === ACTION.EDIT ) {
+          this.title = this.todos[index].title
+          this.description = this.todos[index].description
         } 
       }
       //
@@ -75,17 +87,23 @@ export default {
     handleChange(data) {
       this[data.name] = data.value
     },
+    handleLogout() {
+      Cookies.remove(COOKIES.AUTH_TOKEN)
+      this.$router.push(`${ROUTES.SIGN_IN}`)
+    },
     handleSubmit() {
-      if ( this.selectedTodo_type === 'edit' ) {
+      if ( this.selectedTodo_type === ACTION.EDIT ) {
         return this.editTodo()
       }
-      if ( this.selectedTodo_type === 'delete' ) {
+      if ( this.selectedTodo_type === ACTION.DELETE ) {
         return this.deleteTodo()
       }
-      if ( this.selectedTodo_type === 'completed' ) {
+      if ( this.selectedTodo_type === ACTION.COMPLETE ) {
         return 
       }
-      return this.createTodo()
+      if ( this.selectedTodo_type === ACTION.CREATE ) {
+        return this.createTodo()
+      }
     }
   },
 }
@@ -94,27 +112,36 @@ export default {
 <template> 
   <div v-if="isLoading"><p>Loading...</p></div>
   <div v-else id="home_page--container">
+    <h1>Todo List</h1>
     <MorPopup v-show="isModal">
       <div class="modal_container">
-        <MorInput 
-          name="titleEdit"
-          :value="titleEdit"
-          :place="'Title'"
-          @onChange="handleChange" 
-        />
-        <MorInput 
-          name="descriptionEdit"
-          :value="descriptionEdit"
-          :place="'Description'" 
-          @onChange="handleChange" 
-        />
-        <MorButton content="Save" :onClick="handleSubmit" />
+        <h2 v-if="selectedTodo_type === ACTION.CREATE">Create Todo</h2>
+        <h2 v-if="selectedTodo_type === ACTION.EDIT">Edit Todo</h2>
+        <h2 v-if="selectedTodo_type === ACTION.DELETE">Delete Todo</h2>
+        <h2 v-if="selectedTodo_type === ACTION.COMPLETED">Completed Todo</h2>
+        <div class="group_input" v-if="selectedTodo_type === ACTION.EDIT || selectedTodo_type === ACTION.CREATE">
+          <MorInput 
+            name="title"
+            :value="title"
+            :place="'Title'"
+            @onChange="handleChange" 
+          />
+          <MorInput 
+            name="description"
+            :value="description"
+            :place="'Description'" 
+            @onChange="handleChange" 
+          />
+        </div>
+        <div class="group_button">
+          <MorButton outlined content="Save" :onClick="handleSubmit" />
+          <MorButton standard content="Cancel" :onClick="handleCloseAction" />
+        </div>
       </div>
     </MorPopup> 
     <div class="row">
-      <MorInput name="searchTodo" :place="'Search'" @onChange="handleChange" />
-      <!-- <MorButton content="Search" :onClick="handleModal" /> -->
-      <!-- <MorButton content="Edit" :onClick="handleModal" /> -->
+      <MorButton outlined content="Create new todo" :onClick="() => handleToggle(ACTION.CREATE)" />
+      <MorButton standard content="Log out" :onClick="() => handleLogout()" />
     </div>
     <Todos :todos="todos" class="table_grid" @toggle="handleToggle" />
   </div>
@@ -133,6 +160,14 @@ export default {
     margin: 0 120px;
     background-color: #FFF;
   }
+  h1 {
+    margin: 0;
+  }
+  h2 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
   .row {
     display: flex;
     width: 100%;
@@ -148,10 +183,21 @@ export default {
     padding: 30px 20px;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 20px;
     border-radius: 15px;
   }
   .modal_container > button {
     width: 100%;
+  }
+  .group_input {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: inherit;
+  }
+  .group_button {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
 </style>
