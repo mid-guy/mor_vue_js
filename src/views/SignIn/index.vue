@@ -4,16 +4,25 @@
   import baseAPI from '@/config/index.js'
   import Cookies from 'js-cookie';
 import { API_AUTH_PAGE, COOKIES, ROUTES } from '../../utils/constants';
+import Button from '../../common/Button/index.vue';
+import Input from '../../common/Input/index.vue';
+import Text from '../../common/Text/index.vue';
+import Link from '../../common/Link/index.vue';
   export default {
     components: {
-      MorInput,
-      MorButton,
-    },
+    MorInput,
+    MorButton,
+    Button,
+    Input,
+    Text,
+    Link
+},
     data() {
       return {
         todoContent: '',
         email: '',
         password: '',
+        ROUTES: ROUTES
       }
     },
     methods: {
@@ -35,9 +44,29 @@ import { API_AUTH_PAGE, COOKIES, ROUTES } from '../../utils/constants';
 
 <template>
   <div id="sign_in_page--container">
-    <h1>Sign in</h1>
-    <div class="content">
-      <div class="form_input">
+    <h1>Sign in to TodoList</h1>
+    <div class="container">
+      <div class="content">
+        <div class="mb-16">
+          <Text class="mb-8">Username or email address</Text>
+          <Input name="email" :value="email"  @onChange="handleChange" />
+        </div>
+        <div class="mb-16">
+          <div class="d-flex jtc-space-between mb-8">
+            <Text class="mb-0">Password</Text>
+            <Link class="`${ROUTES.SIGN_UP}`" fontSizeSmall>Forgot password?</Link>
+          </div>
+          <Input type="password" name="password" :value="password" @onChange="handleChange" />
+        </div>
+          <Button fullWidth @onClickEvent="handleSubmit">
+            Sign in
+          </Button>
+      </div>
+      <div class="content" style="display: flex; align-items: center; justify-content: center;">
+        <Text class="mb-0 d-inline-block f-12">
+          New to GitHub?
+          <Link :href="`${ROUTES.SIGN_UP}`">Create an account.</Link>
+        </Text>
       </div>
     </div>
   </div>
@@ -45,6 +74,7 @@ import { API_AUTH_PAGE, COOKIES, ROUTES } from '../../utils/constants';
 
 
 <style lang="scss" scoped>
+  @import '../../assets/variables.scss';
   #sign_in_page--container {
     width: 100vw;
     height: 100vh;
@@ -53,35 +83,22 @@ import { API_AUTH_PAGE, COOKIES, ROUTES } from '../../utils/constants';
     align-items: center;
     justify-content: center;
     h1 {
-      margin: 0;    
+      @include font-apple;
+      margin: 0;
       font-size: 24px;
       font-weight: 300;
       letter-spacing: -0.5px;
-      font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+    }
+    .container {
+      width: 300px;
     }
     .content {
-      width: 330px;
+      margin-top: 16px;
       border-radius: 5px;
-      border: 1px solid hsla(210,18%,87%,1);
-      background-color: #f6f8fa;
-      padding: 16px;
+      border: 1px solid rgb(216, 222, 228);
       box-sizing: border-box;
+      padding: 16px;
     }
-  }
-  
-  #sign_in_page--container .content > button {
-    width: 100%;
-  }
-
-  #sign_in_page--container .content .form_input {
-    background-color: inherit;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-bottom: 20px
-  }
-  h2 {
-    text-align: center;
   }
 
 </style>>

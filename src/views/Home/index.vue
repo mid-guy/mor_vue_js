@@ -7,13 +7,17 @@ import MorPopup from '@/common/MorPopup/index.vue'
 import Cookies from 'js-cookie';
 import { COOKIES } from "../../utils/constants"
 import { API_HOME_PAGE, LEVEL, ACTION, ROUTES } from "@/utils/constants"
+import Header from "../../components/Header/index.vue"
+import Text from "../../common/Text/index.vue"
 export default {
   components: {
     Todos,
     MorInput,
     MorButton,
-    MorPopup
-  },
+    MorPopup,
+    Header,
+    Text
+},
   data() {
     return {
       //
@@ -110,94 +114,37 @@ export default {
 </script>
 
 <template> 
+  <Header />
   <div v-if="isLoading"><p>Loading...</p></div>
-  <div v-else id="home_page--container">
-    <h1>Todo List</h1>
-    <MorPopup v-show="isModal">
-      <div class="modal_container">
-        <h2 v-if="selectedTodo_type === ACTION.CREATE">Create Todo</h2>
-        <h2 v-if="selectedTodo_type === ACTION.EDIT">Edit Todo</h2>
-        <h2 v-if="selectedTodo_type === ACTION.DELETE">Delete Todo</h2>
-        <h2 v-if="selectedTodo_type === ACTION.COMPLETED">Completed Todo</h2>
-        <div class="group_input" v-if="selectedTodo_type === ACTION.EDIT || selectedTodo_type === ACTION.CREATE">
-          <MorInput 
-            name="title"
-            :value="title"
-            :place="'Title'"
-            @onChange="handleChange" 
-          />
-          <MorInput 
-            name="description"
-            :value="description"
-            :place="'Description'" 
-            @onChange="handleChange" 
-          />
-        </div>
-        <div class="group_button">
-          <MorButton outlined content="Save" :onClick="handleSubmit" />
-          <MorButton standard content="Cancel" :onClick="handleCloseAction" />
-        </div>
-      </div>
-    </MorPopup> 
-    <div class="row">
-      <MorButton outlined content="Create new todo" :onClick="() => handleToggle(ACTION.CREATE)" />
-      <MorButton standard content="Log out" :onClick="() => handleLogout()" />
+  <div v-else id="home_page_container">
+    <div class="home_page_content">
+      <Text>Todo List</Text>
+      <Todos :todos="todos" class="table_grid" @toggle="handleToggle" />
     </div>
-    <Todos :todos="todos" class="table_grid" @toggle="handleToggle" />
   </div>
 </template>
 
-<style scoped>
-  #home_page--container {
-    width: auto;
-    position: relative;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 25px;
-    margin: 0 120px;
-    background-color: #FFF;
-  }
-  h1 {
-    margin: 0;
-  }
-  h2 {
-    text-align: center;
-    margin-top: 0;
-    margin-bottom: 10px;
-  }
-  .row {
-    display: flex;
+<style lang="scss" scoped>
+  #home_page_container {
     width: 100%;
-    gap: 10px;
-    background-color: inherit;
-  }
-  .row > div:first-child {
-    flex-grow: 8;
-  }
-  .modal_container {
-    background-color: #FFF;
-    width: 300px;
-    padding: 30px 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    border-radius: 15px;
-  }
-  .modal_container > button {
-    width: 100%;
-  }
-  .group_input {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    background-color: inherit;
-  }
-  .group_button {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    height: calc(100vh - 62px - 24px);
+    .home_page_content {
+      width: 100%;
+      max-width: 1216px;
+      padding: 32px;
+      box-sizing: border-box;
+      height: 100%;
+      margin-top: 24px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    h1 {
+      margin: 0;
+    }
+    h2 {
+      text-align: center;
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
   }
 </style>

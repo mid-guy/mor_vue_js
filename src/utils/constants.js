@@ -23,9 +23,27 @@ export const COOKIES = {
   AUTH_TOKEN: 'auth_token'
 }
 
+export const STATUS = {
+  PROCESSING: 'In progress',
+  COMPLETED: 'Completed'
+}
+
+export const LEVEL_DISPLAY = {
+  LOW: 'Low',
+  MEDIUM: 'Medium',
+  HIGH: 'High',
+  CRITICAL: 'Critical'
+}
+
 export const LEVEL = {
   LOW: 'LOW',
   MEDIUM: 'MEDIUM',
   HIGH: 'HIGH',
   CRITICAL: 'CRITICAL'
 }
+
+export const ICON_MENU = {
+  URL: 'assets/image/menu.png',
+  ALT: 'menu'
+} 
+

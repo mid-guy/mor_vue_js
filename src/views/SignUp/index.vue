@@ -47,25 +47,4 @@
 
 
 <style>
-  #sign_in_page--container {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  #sign_in_page--container .content {
-    width: 330px;
-    border-radius: 15px;
-    background-color: rgb(199, 199, 199);
-    padding: 20px 25px;
-    box-sizing: border-box;
-  }
-
-  #sign_in_page--container .content .form_input {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-bottom: 20px
-  }
 </style>
