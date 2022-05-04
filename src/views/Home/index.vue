@@ -3,20 +3,24 @@ import baseAPI from "@/config"
 import Todos from '@/components/Todos/index.vue'
 import MorInput from '@/common/MorInput/index.vue'
 import MorButton from '@/common/MorButton/index.vue'
-import MorPopup from '@/common/MorPopup/index.vue'
 import Cookies from 'js-cookie';
 import { COOKIES } from "../../utils/constants"
 import { API_HOME_PAGE, LEVEL, ACTION, ROUTES } from "@/utils/constants"
 import Header from "../../components/Header/index.vue"
 import Text from "../../common/Text/index.vue"
+import Popup from "../../common/Popup/index.vue";
+import Menu from "../../common/Menu/index.vue";
+import Button from "../../common/Button/index.vue";
 export default {
   components: {
     Todos,
     MorInput,
     MorButton,
-    MorPopup,
     Header,
-    Text
+    Text,
+    Popup,
+    Menu,
+    Button
 },
   data() {
     return {
@@ -26,6 +30,11 @@ export default {
       todos: [],
       isLoading: false,
       isModal: false,
+      isMenu: false,
+      postionOfMenu: {
+        bottom: '',
+        left: ''
+      },
       selectedTodo_id: '',
       selectedTodo_type: '',
       title: '',
@@ -88,6 +97,20 @@ export default {
       //
       this.isModal = !this.isModal
     },
+    handleToggleMenu(positionOfElement) {
+      console.log(positionOfElement)
+      this.postionOfMenu = positionOfElement
+      this.isMenu = !this.isMenu
+    },
+    handleCompleteTodo() {
+      
+    },
+    handleViewDetialTodo() {
+      
+    },
+    handleDeleteTodo() {
+
+    },
     handleChange(data) {
       this[data.name] = data.value
     },
@@ -117,9 +140,20 @@ export default {
   <Header />
   <div v-if="isLoading"><p>Loading...</p></div>
   <div v-else id="home_page_container">
+    <Teleport to="#body">
+      <Popup v-if="isModal">
+      </Popup>
+    </Teleport>
+    <Teleport to="#body">
+      <Menu v-if="isMenu" :left="postionOfMenu.left" :bottom="postionOfMenu.bottom">
+        <Text class="mb-0 fontSizeSmall">View</Text>
+        <Text class="mb-0 fontSizeSmall">Completed</Text>
+        <Text class="mb-0 color-danger fontSizeSmall">Delete</Text>
+      </Menu>
+    </Teleport>
     <div class="home_page_content">
       <Text>Todo List</Text>
-      <Todos :todos="todos" class="table_grid" @toggle="handleToggle" />
+      <Todos :todos="todos" class="table_grid" @toggle="handleToggleMenu" />
     </div>
   </div>
 </template>

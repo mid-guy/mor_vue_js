@@ -33,7 +33,7 @@ export default {
     height: 32px;
     padding: 5px 16px;
     font-size: $--font-size;
-    font-weight: 500;
+    font-weight: 600;
     line-height: 20px;
     border-radius: 5px;
     white-space: nowrap;
@@ -45,6 +45,8 @@ export default {
     border: none;
     cursor: pointer;
     @include font-apple;
+  }
+  .btn--default {
     &:hover {
       background-color: $--color-btn-default-hover;
     }

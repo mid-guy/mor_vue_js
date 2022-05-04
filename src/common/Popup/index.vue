@@ -1,5 +1,5 @@
 <template>
-  <div class="popup_background--overflow">
+  <div class="popup_background_overflow">
     <slot></slot>
   </div>
 </template>
@@ -11,10 +11,11 @@
 </script>
 
 <style scoped>
-  .popup_background--overflow {
+  .popup_background_overflow {
     width: 100vw;
     height: 100vh;
     position: absolute;
+    top: 0;
     z-index: 1000;
     background-color: rgba(0, 0, 0, 0.7);
     display: flex;

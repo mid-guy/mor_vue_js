@@ -24,4 +24,7 @@
   .jtc-space-between {
     justify-content: space-between;
   }
+  .color-danger {
+    color: red
+  }
 </style>

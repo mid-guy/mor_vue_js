@@ -1,16 +1,13 @@
 <script>
-  import MorButton from '@/common/MorButton/index.vue';
   import moment from 'moment';
   import { ACTION, STATUS, LEVEL_DISPLAY, ICON_MENU } from '../../utils/constants';
   import Text from '../../common/Text/index.vue';
   import Button from '../../common/Button/index.vue';
-// import Image from '../../common/Image/index.vue';
   export default {
     components: {
-    MorButton,
     Text,
     Button,
-    Image
+    Image,
 },
     data() {
       return {
@@ -24,8 +21,15 @@
       todos: Array,
     },
     methods: {
-      onClick(_id, index, type) {
-        this.$emit('toggle', { _id, index, type })
+      // onClick(_id, index, type, ) {
+      //   this.$emit('toggle', { _id, index, type })
+      // },
+      onClick(element) {
+        const positionOfElement = { 
+          bottom: this.$refs[element][0].getBoundingClientRect().bottom,
+          left: this.$refs[element][0].getBoundingClientRect().left - 10
+        }
+        this.$emit('toggle', positionOfElement)
       },
       convertDate(time) {
         return moment(time).format('DD/MM/YYYY')
@@ -83,8 +87,11 @@
           <Text class="mb-0 description">
             {{ todo.description }}
           </Text>
-          <div class="action">
-            <Button singleIcon>
+          <div class="action" :ref="`position_${todo._id}`">
+            <Button 
+              singleIcon 
+              @onClickEvent="onClick(`position_${todo._id}`)"
+            >
               <img src="@/assets/image/menu.png" alt="icon_menu" />
             </Button>
           </div>
