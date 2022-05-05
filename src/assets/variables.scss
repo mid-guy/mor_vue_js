@@ -8,11 +8,12 @@ $--color-border-focus-visible: #0969da;
 
 $--color-header-bg: #24292f;
 $--color-href-text: #0969da;
-
+$--color-group-btn-selected-bg: #eaeaea;
 $--color-dot-status-completed: rgb(45, 164, 79);
 $--color-dot-status-processing: rgb(9, 105, 218);
 $--color-dot-status-pending: rgb(208, 215, 222);
 
+$--color-border-default: #d0d7de;
 $--font-size: 14px;
 
 @mixin font-apple {
@@ -21,6 +22,3 @@ $--font-size: 14px;
   line-height: 1.5;
 }
 
-@mixin icon {
-  
-}

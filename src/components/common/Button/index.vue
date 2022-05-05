@@ -36,7 +36,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '../../assets/variables.scss';
+  @import '@/assets/variables.scss';
   .btn {
     height: 32px;
     padding: 5px 16px;

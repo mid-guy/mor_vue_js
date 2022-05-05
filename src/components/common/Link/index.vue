@@ -21,7 +21,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '../../assets/variables.scss';
+  @import '@/assets/variables.scss';
   .link-route {
     @include font-apple;
     text-decoration: none;

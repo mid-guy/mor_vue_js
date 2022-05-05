@@ -9,7 +9,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '../../assets/variables.scss';
+  @import '@/assets/variables.scss';
   #header--position--fixed {
     position: sticky;
     top: 0;

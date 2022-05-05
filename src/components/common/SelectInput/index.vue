@@ -6,6 +6,7 @@
       readonly
       :name="name"
       :value="value" 
+      :disabled="disabled"
     />
     <div class="select_items">
       <slot 
@@ -32,10 +33,10 @@ export default {
       type: String,
       default: 'text'
     },
-    mutiline: {
-      type: Boolean,
+    disabled: {
+      type: Boolean, 
       default: false
-    }
+    },
   },
   methods: {
     onChange(e) {
@@ -49,7 +50,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '../../assets/variables.scss';
+  @import '@/assets/variables.scss';
   .select_input_container {
     position: relative;
     .form-control {
@@ -77,6 +78,9 @@ export default {
       background-color: #FFFFFF;
       -webkit-box-shadow: 0px 2px 10px 1px rgb(0 0 0 / 20%);
       box-shadow: 0px 2px 10px 1px rgb(0 0 0 / 20%);
+    }
+    input:disabled {
+      opacity: 0.65;
     }
   }
 </style>

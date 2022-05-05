@@ -24,6 +24,10 @@
     justify-content: space-between;
   }
   .color-danger {
-    color: red
+    color: red;
+  }
+
+  .gap-8 {
+    gap: 8px;
   }
 </style>
