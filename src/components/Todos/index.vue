@@ -1,6 +1,6 @@
 <script>
   import moment from 'moment';
-  import { ACTION, STATUS, LEVEL_DISPLAY, ICON_MENU } from '../../utils/constants';
+  import { ACTION, STATUS, LEVEL_DISPLAY, ICON_MENU, DOT_STATUS, STATUS_UPLOAD } from '../../utils/constants';
   import Text from '../../common/Text/index.vue';
   import Button from '../../common/Button/index.vue';
   export default {
@@ -13,23 +13,24 @@
       return {
         ACTION: ACTION,
         STATUS: STATUS,
+        STATUS_UPLOAD: STATUS_UPLOAD,
+        DOT_STATUS: DOT_STATUS,
         LEVEL_DISPLAY: LEVEL_DISPLAY,
         ICON_MENU: ICON_MENU
       }
     },
     props: {
-      todos: Array,
+      todos: Array
     },
     methods: {
-      // onClick(_id, index, type, ) {
-      //   this.$emit('toggle', { _id, index, type })
-      // },
-      onClick(element) {
-        const positionOfElement = { 
+      onClick(data) {
+        // position of element what is menu place
+        const { element, _id, index } = data
+        const position = { 
           bottom: this.$refs[element][0].getBoundingClientRect().bottom,
           left: this.$refs[element][0].getBoundingClientRect().left - 10
         }
-        this.$emit('toggle', positionOfElement)
+        this.$emit('toggle', { position, _id, index })
       },
       convertDate(time) {
         return moment(time).format('DD/MM/YYYY')
@@ -64,7 +65,9 @@
         </div>
       </div>
       <div class="table_content">
-        <div class="row row--transition"
+        <div 
+          class="row"
+          :class="[ { 'todo_completed': todo.status === STATUS_UPLOAD.COMPLETED }]"
           v-for="todo, index in todos"
           :key="todo._id"
         >
@@ -75,7 +78,10 @@
             {{ todo.title }}
           </Text>
           <Text class="mb-0 status">
-            <div class="dot-status dot-status--completed" />
+            <div 
+              class="dot-status" 
+              :class="[DOT_STATUS[todo.status]]"
+            />
             {{ STATUS[todo.status] }}
           </Text>
           <Text class="mb-0 level">
@@ -87,10 +93,16 @@
           <Text class="mb-0 description">
             {{ todo.description }}
           </Text>
-          <div class="action" :ref="`position_${todo._id}`">
+          <div 
+            class="action" :ref="`position_${todo._id}`"
+          >
             <Button 
               singleIcon 
-              @onClickEvent="onClick(`position_${todo._id}`)"
+              @onClickEvent="onClick({ 
+                element: `position_${todo._id}`,  
+                _id: todo._id,
+                index: index
+              })"
             >
               <img src="@/assets/image/menu.png" alt="icon_menu" />
             </Button>
@@ -119,6 +131,9 @@
     }
     .row {
       border-bottom: 1px solid $--color-border-default;
+    }
+    .todo_completed {
+      opacity: 0.5;
     }
     .table_header_sticky {
       position: sticky;
@@ -170,8 +185,14 @@
     .action {
       padding: 0 25px; 
     }
+    .dot-status--proccesing {
+      background-color: $--color-dot-status-processing;
+    }
     .dot-status--completed {
-      background-color: red;
+      background-color: $--color-dot-status-completed;
+    }
+    .dot-status--pending {
+      background-color: $--color-dot-status-pending;
     }
     .table_content {
       width: 1200px;

@@ -18,7 +18,7 @@ const PostSchema = new Schema({
   },
   status: {
     type: String,
-    enum: ['COMPLETED', 'PROCESSING'],
+    enum: ['PENDING', 'COMPLETED', 'PROCESSING'],
     default: 'PROCESSING',
     required: true
   },

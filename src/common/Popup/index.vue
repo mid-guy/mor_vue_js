@@ -16,8 +16,8 @@
     height: 100vh;
     position: absolute;
     top: 0;
-    z-index: 1000;
-    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1002;
+    background-color: rgba(0, 0, 0, 0.3);
     display: flex;
     align-items: center;
     justify-content: center;

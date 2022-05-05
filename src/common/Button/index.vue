@@ -5,6 +5,10 @@
       'btn-icon': singleIcon,
       'btn--fullWidth': fullWidth,
       'btn--filled--primary': primary,
+      'btn--default': text,
+      'btn--menu': menu,
+      'f-12': fontSizeSmall,
+      'btn--align--center': textAlignCenter
     }"
     @click="onClick" 
   >
@@ -17,7 +21,11 @@ export default {
   props: {
     fullWidth: Boolean,
     singleIcon: Boolean,
-    primary: Boolean
+    primary: Boolean,
+    text: Boolean,
+    menu: Boolean,
+    fontSizeSmall: Boolean,
+    textAlignCenter: Boolean
   },
   methods: {
     onClick() {
@@ -51,12 +59,22 @@ export default {
       background-color: $--color-btn-default-hover;
     }
   }
+  .btn--menu {
+    width: 100%;
+    border-radius: 0;
+    &:hover {
+      background-color: $--color-btn-default-hover;
+    }
+  }
   .btn-icon {
     padding: 5px 8px;
     border-radius: 16px;
     &:hover {
       background: none;
     }
+  }
+  .btn--align--center {
+    justify-content: center;
   }
   .btn--fullWidth {
     width: 100%;
@@ -67,5 +85,8 @@ export default {
     }
     background-color: $--color-btn-primary;
     color: $--color-btn-text;
+  }
+  .f-12 {
+    font-size: 12px;
   }
 </style>

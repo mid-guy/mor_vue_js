@@ -1,6 +1,9 @@
 <template>
   <div class="menu_background_overflow">
-    <div :style="`top: ${bottom}px; left: ${left}px;`" class="menu_container">
+    <div 
+      :style="`top: ${bottom}px; left: ${left}px;`" 
+      class="menu_container"
+    >
       <slot></slot>
     </div>
   </div>
@@ -8,17 +11,22 @@
 
 <script>
 export default {
+  data() {
+    return {
+      isOpen: false
+    }
+  },
   props: {
     bottom: { 
-      type: String,
+      type: Number,
       default: 0 
     },
     left: { 
-      type: String,
+      type: Number,
       default: 0 
     },
-  }
-}
+  },
+} 
 </script>
 
 <style lang="scss" scoped>
@@ -37,7 +45,7 @@ export default {
       width: 100px;
       height: fit-content;
       background-color: #FFFFFF;
-      padding: 16px;
+      padding: 4px 0;
       border-radius: 5px;
       box-sizing: border-box;
       -webkit-box-shadow: 0px 2px 10px 1px rgb(0 0 0 / 20%);

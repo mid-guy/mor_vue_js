@@ -1,10 +1,14 @@
-export const ACTION = {
-  CREATE: 'create',
-  EDIT: 'edit',
-  COMPLETED: 'completed',
-  DELETE: 'delete'
+export const ACTION_DISPLAY = {
+  CREATE: 'Create',
+  EDIT: 'Edit',
+  DELETE: 'Delete'
 }
 
+export const ACTION = {
+  CREATE: 'CREATE',
+  EDIT: 'EDIT',
+  DELETE: 'DELETE'
+}
 
 export const ROUTES = {
   SIGN_IN: '/sign-in',
@@ -25,7 +29,20 @@ export const COOKIES = {
 
 export const STATUS = {
   PROCESSING: 'In progress',
+  PENDING: 'Pending',
   COMPLETED: 'Completed'
+}
+
+export const STATUS_UPLOAD = {
+  PENDING: 'PENDING',
+  PROCESSING: 'PROCESSING',
+  COMPLETED: 'COMPLETED'
+}
+
+export const DOT_STATUS = {
+  PENDING: 'dot-status--pending',
+  PROCESSING: 'dot-status--proccesing',
+  COMPLETED: 'dot-status--completed'
 }
 
 export const LEVEL_DISPLAY = {
@@ -43,7 +60,11 @@ export const LEVEL = {
 }
 
 export const ICON_MENU = {
-  URL: 'assets/image/menu.png',
+  URL: '@/assets/image/menu.png',
   ALT: 'menu'
 } 
 
+export const ICON_CLOSE = {
+  URL: '@/assets/image/close.png',
+  ALT: 'close'
+} 

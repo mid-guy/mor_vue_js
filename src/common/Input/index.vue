@@ -1,10 +1,23 @@
 
 <template>
   <input 
+    v-if="!mutiline"
     class='form-control'
     :value="value"
     :type="type"
-    @input="onChange"
+    @input="handleChange"
+    autocomplete="off"
+    autocorrect="off"
+    autocapitalize="off"
+    autofocus="autofocus"
+  />
+  <textarea 
+    v-if="mutiline"
+    class='form-control'
+    rows="5"
+    :value="value"
+    :type="type"
+    @input="handleChange"
     autocomplete="off"
     autocorrect="off"
     autocapitalize="off"
@@ -14,16 +27,23 @@
 <script>
   export default {
     props: {
-      value: String,
+      value: { 
+        type: String, 
+        default: ''
+      },
       name: String,
       type: {
         type: String,
         default: 'text'
+      },
+      mutiline: {
+        type: Boolean,
+        default: false
       }
     },
     methods: {
-      onChange(e) {
-        this.$emit('onChange', { name: this.name, value: e.target.value } )
+      handleChange(e) {
+        this.$emit('onChangeValue', { name: this.name, value: e.target.value } )
       },
     } 
   }
