@@ -38,20 +38,20 @@ export default {
 <style lang="scss" scoped>
   @import '@/assets/variables.scss';
   .btn {
-    height: 32px;
-    padding: 5px 16px;
-    font-size: $--font-size;
-    font-weight: 600;
-    line-height: 20px;
-    border-radius: 5px;
-    white-space: nowrap;
-    vertical-align: middle;
-    display: flex;
     align-items: center;
-    transition: 0.15s ease-in;
     background: none;
+    border-radius: 5px;
     border: none;
     cursor: pointer;
+    display: flex;
+    font-size: $--font-size;
+    font-weight: 600;
+    height: 32px;
+    line-height: 20px;
+    padding: 5px 16px;
+    transition: 0.15s ease-in;
+    vertical-align: middle;
+    white-space: nowrap;
     @include font-apple;
   }
   .btn--default {

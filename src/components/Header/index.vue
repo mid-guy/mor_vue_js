@@ -25,20 +25,20 @@ export default {
 <style lang="scss" scoped>
   @import '@/assets/variables.scss';
   #header--position--fixed {
+    align-items: center;
+    background-color: $--color-header-bg;
+    display: flex;
+    height: 62px;
     position: sticky;
     top: 0;
     width: 100%;
-    height: 62px;
-    background-color: $--color-header-bg;
-    display: flex;
-    align-items: center;
 
     .header_container {
-      width: 1216px;
-      flex-direction: row-reverse;
       box-sizing: border-box;
+      flex-direction: row-reverse;
       margin: auto;
       padding: 16px 32px;
+      width: 1216px;
       .btn_logout {
         color: #FFFFFF;
       }

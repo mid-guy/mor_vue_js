@@ -227,7 +227,11 @@ export default {
           return { ...prevValue, processing: prevValue.processing + 1 }
         }
         return prevValue
-      },this.countTodo)
+      }, { 
+        pending: 0 ,
+        completed: 0,
+        processing: 0
+      })
     },
     handleCloseAction() {
       this.cleanInput()
