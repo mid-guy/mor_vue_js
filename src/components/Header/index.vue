@@ -1,10 +1,24 @@
 <template>
-  <div id="header--position--fixed"></div>
+  <div id="header--position--fixed">
+    <div class="header_container d-flex">
+      <Button class="btn_logout" @click="handleLogout">Log out</Button>
+    </div>
+  </div>
 </template>
 
 <script>
+import Button from "../common/Button/index.vue";
+import Cookies from 'js-cookie';
+import { COOKIES } from "@/helper/constants"
+import { ROUTES } from "@/helper/constants"
 export default {
-
+  components: { Button },
+  methods: {
+    handleLogout() {
+      Cookies.remove(COOKIES.AUTH_TOKEN)
+      this.$router.push(`${ROUTES.SIGN_IN}`)
+    },
+  }
 }
 </script>
 
@@ -16,5 +30,18 @@ export default {
     width: 100%;
     height: 62px;
     background-color: $--color-header-bg;
+    display: flex;
+    align-items: center;
+
+    .header_container {
+      width: 1216px;
+      flex-direction: row-reverse;
+      box-sizing: border-box;
+      margin: auto;
+      padding: 16px 32px;
+      .btn_logout {
+        color: #FFFFFF;
+      }
+    }
   }
 </style>

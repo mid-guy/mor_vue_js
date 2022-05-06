@@ -9,8 +9,8 @@
       </div>
       <div class="mb-16 d-flex gap-8">
         <Input name="searchTodo" :value="searchTodo" />
-        <GroupButton />
-        <Button primary>New Todo</Button>
+        <GroupButton @onClickEvent="handleFilterTodo" :countTodo="countTodo" />
+        <Button primary @onClickEvent="handleOpenModal(ACTION.CREATE)">New Todo</Button>
       </div>
       <Todos :todos="todos" class="table_grid" @toggle="handleToggleMenu" />
     </div>
@@ -92,13 +92,10 @@
     </Teleport>
   </div>
 </template>
-
 <script>
 import Todos from '@/components/Todos/index.vue'
-import Cookies from 'js-cookie';
-import { COOKIES } from "@/helper/constants"
 import { createTodoRequest, getAllTodoRequest, editTodoRequest, deleteTodoRequest} from '@/service/Home'
-import { LEVEL, ACTION, ROUTES, STATUS, STATUS_UPLOAD, ACTION_DISPLAY } from "@/helper/constants"
+import { LEVEL, ACTION, STATUS, STATUS_UPLOAD, ACTION_DISPLAY, ACTION_FILTER } from "@/helper/constants"
 import Header from "@/components/Header/index.vue"
 import Text from "@/components/common/Text/index.vue"
 import Popup from "@/components/common/Popup/index.vue";
@@ -126,6 +123,13 @@ export default {
       STATUS_UPLOAD: STATUS_UPLOAD,
       ACTION_DISPLAY: ACTION_DISPLAY,
       todos: [],
+      cacheTodos: [],
+      countTodo: {
+        pending: 0,
+        completed: 0,
+        processing: 0
+      },
+      typeFilterTodos: ACTION_FILTER.ALL,
       isLoading: false,
       isModal: false,
       isMenu: false,
@@ -151,6 +155,8 @@ export default {
         const response = await getAllTodoRequest()
         this.todos = response.data.posts
         this.isLoading = false
+        this.cacheTodos = this.todos
+        this.handleCountTodo(response.data.posts)
       } catch(err) {
         console.log(err)
       }
@@ -166,7 +172,7 @@ export default {
         await createTodoRequest(body)
         this.cleanInput()
         this.handleToggleModal()
-        this.fetchTodo()
+        this.fetchAllTodo()
       } catch(err) {
         console.log(err)
       }
@@ -203,6 +209,26 @@ export default {
       this.selectedTodo_type = ''
       this.searchTodo = ''
     },
+    handleFilterTodo(type) {
+      if ( type !== ACTION_FILTER.ALL ) {
+        return this.todos = this.cacheTodos.filter((todo) => todo.status === type)
+      }
+      return this.todos = this.cacheTodos
+    },
+    handleCountTodo(todos) {
+      this.countTodo = todos.reduce((prevValue, nextValue) => {
+        if ( nextValue.status === ACTION_FILTER.PENDING ) {
+          return { ...prevValue, pending: prevValue.pending + 1 }
+        }
+        if ( nextValue.status === ACTION_FILTER.COMPLETED ) {
+          return { ...prevValue, completed: prevValue.completed + 1 }
+        }
+        if ( nextValue.status === ACTION_FILTER.PROCESSING ) {
+          return { ...prevValue, processing: prevValue.processing + 1 }
+        }
+        return prevValue
+      },this.countTodo)
+    },
     handleCloseAction() {
       this.cleanInput()
       this.handleToggleModal()
@@ -212,6 +238,9 @@ export default {
         this.selectedTodo_type = type
       }
       if (  type === ACTION.DELETE ) {
+        this.selectedTodo_type = type
+      }
+      if ( type === ACTION.CREATE ) {
         this.selectedTodo_type = type
       }
       this.handleToggleModal()
@@ -240,10 +269,6 @@ export default {
     handleChange(data) {
       this[data.name] = data.value
     },
-    handleLogout() {
-      Cookies.remove(COOKIES.AUTH_TOKEN)
-      this.$router.push(`${ROUTES.SIGN_IN}`)
-    },
     handleSubmit() {
       if ( this.selectedTodo_type === ACTION.EDIT ) {
         return this.editTodo()
@@ -256,6 +281,9 @@ export default {
       }
     }
   },
+  computed() {
+
+  }
 }
 </script>
 

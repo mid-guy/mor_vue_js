@@ -59,6 +59,13 @@ export const LEVEL = {
   CRITICAL: 'CRITICAL'
 }
 
+export const ACTION_FILTER = {
+  ALL: 'ALL',
+  COMPLETED: 'COMPLETED',
+  PENDING: 'PENDING',
+  PROCESSING: 'PROCESSING'
+}
+
 export const ICON_MENU = {
   URL: '@/assets/image/menu.png',
   ALT: 'menu'
