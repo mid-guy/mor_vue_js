@@ -8,7 +8,7 @@
       :value="value" 
       :disabled="disabled"
     />
-    <div class="select_items">
+    <div class="select_items" v-click-outside="handleClickOutMenu">
       <slot 
         name="option" 
         :isOpen="isOpen" 
@@ -23,7 +23,8 @@
 export default {
   data() {
     return {
-      isOpen: false
+      isOpen: false,
+      isMounted: false
     }
   },
   props: {
@@ -41,6 +42,13 @@ export default {
   methods: {
     onChange(e) {
       this.$emit('onChange', { name: this.name, value: e.target.value } )
+    },
+    handleClickOutMenu() {
+      if ( !this.isMounted ) {
+        console.log('is_mounted')
+        return this.isMounted = true
+      }
+      this.isOpen = !this.isOpen
     },
     handleOpenSelect() {
       this.isOpen = !this.isOpen
